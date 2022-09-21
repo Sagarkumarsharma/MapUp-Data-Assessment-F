@@ -1,0 +1,38 @@
+{% if request.user.is_authenticated %}
+<p>{{ request.user }}</p> <!--accessing logged in user-->
+<a href="{% url 'logout-detail' %}">Logout</a>
+{% else %}
+<a href="{% url 'login-detail' %}">Login</a>  <!--if user already logged so go to logout option-->
+{% endif %}
+
+<hr>
+
+<h1> My To Do List </h1>
+<a href="{% url 'task-create' %}">Add Task</a>
+
+<!--creating search form-->
+<form method="GET">
+    <input type="text" name = "search-area" value="{{search_input}}">
+    <input type="submit" value = "Search">
+</form>
+
+
+<!--render all todo items inside a table-->
+<table>
+<tr>
+    <th>Item</th>
+    <th>Item</th>
+</tr>
+{% for task in tasks %} <!--tasks is nothing but its context object name of views-->
+<tr>
+    <td>{{task.title}}</td>
+    <td><a href="{% url 'task-detail' task.id %}">View</a></td>  <!--task-detail from urls and task context_object from views-->
+    <td><a href="{% url 'task-update' task.id %}">Edit</a></td>   <!--adding edit link-->
+    <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>   <!--adding delete link-->
+
+</tr>
+{% empty %}
+<h3>No items in list</h3>
+
+{% endfor %}
+</table>
