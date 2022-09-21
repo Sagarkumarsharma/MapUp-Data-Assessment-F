@@ -1,0 +1,27 @@
+<!--extend base template as parent-->
+{% extends "django_app/base.html" %}
+{% block content %}
+
+<article class="media content-section">
+
+    <!--this code for author related details-->
+    <div class="media-body">
+        <div class="article-metadata">
+            <!--call the image of current author on homepage-->
+            <img class="rounded-circle article-img" src="{{ object.Author.profile.image.url }}">
+            <a class="mr-2" href="#">{{ object.Author }}</a>
+            <small class="text-muted">{{ object.Date_Posted|date:"F d, Y" }}</small>
+        <!--here we will add delete button for the post deletion-->
+         {% if object.Author == user %}
+         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post1-update' object.id %}"> Update </a>
+         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post1-delete' object.id %}"> Delete </a>
+         {% endif %}        
+        </div>
+        <h2><a class="article-title">{{ object.Title }}</h2>
+        <p class="article-content">{{ object.Content }}</p>
+    </div>
+</article>
+
+
+
+{% endblock content %}
